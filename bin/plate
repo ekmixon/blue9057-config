@@ -14,7 +14,7 @@ SUPPORTED_TYPES = [
 def main():
 
     if len(sys.argv) != 2:
-        print("USAGE: %s [filname]" % __file__)
+        print(f"USAGE: {__file__} [filname]")
         quit()
 
     f_name = sys.argv[1]
@@ -27,8 +27,8 @@ def main():
     else:
         f_type = f_name.split('.')[-1]
 
-    if not f_type in SUPPORTED_TYPES:
-        print("Type %s is not supported." % f_type)
+    if f_type not in SUPPORTED_TYPES:
+        print(f"Type {f_type} is not supported.")
         print("Please refer to the following types")
         for types in SUPPORTED_TYPES:
             print(types)
@@ -37,8 +37,8 @@ def main():
 
     script_path = os.path.dirname(os.path.abspath(__file__))
 
-    from_path = "%s/template.%s" % (script_path, f_type)
-    to_path = "%s" % (f_name)
+    from_path = f"{script_path}/template.{f_type}"
+    to_path = f"{f_name}"
     ret = shutil.copyfile(from_path, to_path)
     print(ret)
 

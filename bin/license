@@ -128,7 +128,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 def usage():
-    print("%s [license-term; default=MIT]" % __file__)
+    print(f"{__file__} [license-term; default=MIT]")
     quit()
 
 def main():
@@ -140,7 +140,7 @@ def main():
         else:
             usage()
 
-    print("Selected license: %s" % default)
+    print(f"Selected license: {default}")
 
     with open("LICENSE", "wb") as f:
         f.write(bytes(license_text[default], 'utf-8'))

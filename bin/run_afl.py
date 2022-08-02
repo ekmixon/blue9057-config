@@ -15,11 +15,7 @@ if __name__ == "__main__":
 
     for i in xrange(args.instance):
         os.system("ln -s output/%d/.cur_input %d" % (i, i))
-        if(i == 0):
-            real_cmd = AFL_CMD + ("-M %d" % i)
-        else:
-            real_cmd = AFL_CMD + ("-S %d" % i)
-
+        real_cmd = AFL_CMD + ("-M %d" % i) if (i == 0) else AFL_CMD + ("-S %d" % i)
         cmd = args.cmdline.split(" ")[0]
         real_cmd = "tmux new-window -n %s-%d '%s -- %s %d'" % (cmd, i, real_cmd, args.cmdline, i)
 

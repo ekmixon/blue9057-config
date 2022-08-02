@@ -13,4 +13,4 @@ SERVER_LISTS = [
 
 for server in SERVER_LISTS:
     o = subprocess.check_output('ssh %s.eecs.oregonstate.edu "sudo apt update; sudo apt -y upgrade"' % server, shell=True)
-    print("%s: %s" % (server, o))
+    print(f"{server}: {o}")

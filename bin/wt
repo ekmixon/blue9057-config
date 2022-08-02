@@ -24,7 +24,7 @@ def main():
             city = '"Los Angeles"'
         else:
             city = '"%s"'%sys.argv[1]
-    os.system("curl wttr.in/%s" % city)
+    os.system(f"curl wttr.in/{city}")
 
 if __name__ == '__main__':
     main()

@@ -10,15 +10,15 @@ import sys
 #nohup zoom "--url=zoommtg://zoom.us/join?action=join&confno=4045838440"
 
 def main():
-    URL = "--url=zoommtg://zoom.us/join?action=join&confno=4045838440"
     zoom_cmd = str(subprocess.check_output('which zoom', shell=True).strip(), 'utf-8')
     filepath = os.path.abspath(__file__)
     if len(sys.argv) == 1:
-        cmd = "{} run".format(filepath)
+        cmd = f"{filepath} run"
         os.system(cmd)
     else:
+        URL = "--url=zoommtg://zoom.us/join?action=join&confno=4045838440"
         # start-stop-daemon
-        os.system('{} "{}" 2>/dev/null&'.format(zoom_cmd, URL))
+        os.system(f'{zoom_cmd} "{URL}" 2>/dev/null&')
 
 if __name__ == '__main__':
     main()

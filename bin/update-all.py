@@ -28,20 +28,12 @@ def run_cmd(cmd, addr, port):
     return th
 
 threads = []
+cmd = 'sudo apt update; sudo apt -y upgrade'
 for server in SERVERS:
     s = server.split(':')
-    if len(s) == 1:
-        port = 22
-    else:
-        port = int(s[1])
-
-    if '.' in s[0]:
-        addr = s[0]
-    else:
-        addr = s[0] + '.eecs.oregonstate.edu'
-
-    print "Connecting to %s:%d" % (addr, port)
-    cmd = 'sudo apt update; sudo apt -y upgrade'
+    port = 22 if len(s) == 1 else int(s[1])
+    addr = s[0] if '.' in s[0] else f'{s[0]}.eecs.oregonstate.edu'
+    s = server.split(':')
     threads.append(run_cmd(cmd, addr, port))
 
 for t in threads:

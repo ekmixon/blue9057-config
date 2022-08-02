@@ -7,10 +7,7 @@ import sys
 # whitespace sanitizer
 def s(filename):
     if ' ' in filename or '\n' in filename or '\t' in filename:
-        if '"' in filename:
-            return ("'%s'" % filename)
-        else:
-            return '"%s"' % filename
+        return ("'%s'" % filename) if '"' in filename else '"%s"' % filename
     else:
         return filename
 
@@ -51,22 +48,22 @@ def adjust_commands():
 
     for k in a_list:
         v = a_list[k]
-        print("%s => %s" % (k,v))
-        o = subprocess.check_output('which %s' % v, shell=True)
+        print(f"{k} => {v}")
+        o = subprocess.check_output(f'which {v}', shell=True)
         if v in o:
             cmds[k] = v
 
 
 def run_command_with(cmd, arg):
-    full_cmd = ("%s %s" % (s(cmd), s(arg)))
+    full_cmd = f"{s(cmd)} {s(arg)}"
     print('Running: "%s"' % full_cmd)
     os.system(full_cmd)
 
 def run_command_without(cmd, arg):
 
-    full_cmd = ("%s %s" % (cmd, s(arg)))
+    full_cmd = f"{cmd} {s(arg)}"
     print('Running: "%s"' % full_cmd)
-    os.system("nohup %s 2>&1 >/dev/null &" % full_cmd)
+    os.system(f"nohup {full_cmd} 2>&1 >/dev/null &")
     quit()
 
 def open_vmware(filename):
@@ -83,14 +80,9 @@ def open_ida(command):
         quit()
 
 def open_pdf(filename):
-    eligible = False
     images = ['png', 'jpg', 'jpeg', 'gif', 'tiff', 'pdf', 'bmp']
 
-    for image in images:
-        if filename.endswith(image):
-            eligible = True
-            break
-
+    eligible = any(filename.endswith(image) for image in images)
     if not eligible:
         return
 
@@ -98,14 +90,9 @@ def open_pdf(filename):
     run_command_without(cmd, filename)
 
 def open_tex(filename):
-    eligible = False
     exts = ['txt', 'tex', 'bib']
 
-    for ext in exts:
-        if filename.endswith(ext):
-            eligible = True
-            break
-
+    eligible = any(filename.endswith(ext) for ext in exts)
     if not eligible:
         return
 
@@ -118,14 +105,9 @@ def open_path(filename):
 
 
 def open_web(filename):
-    eligible = False
     webs = ['http:', 'https:', 'ftp:']
 
-    for web in webs:
-        if filename.startswith(web):
-            eligible = True
-            break
-
+    eligible = any(filename.startswith(web) for web in webs)
     if not eligible:
         return
 
